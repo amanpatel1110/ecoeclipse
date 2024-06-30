@@ -195,8 +195,8 @@ app.post('/sendEmail',body('email').exists().trim().isEmail().withMessage('Email
 });
 
 app.get('/user/logout', (req, res) => {
-    res.clearCookie('token');
 
+    res.clearCookie('token');
     return res.json({ msg: 'success' });
 });
 
