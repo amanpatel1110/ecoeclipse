@@ -124,7 +124,7 @@ app.post('/user/login', [
 
     else {
         const token = generateToken(findUser);
-        return res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None' }).json({ msg: 'success', token: token });
+        return res.status(200).cookie('token', token, 7 ,{ httpOnly: true, secure: true, sameSite: 'None'}).json({ msg: 'success', token: token });
     }
 
 });
