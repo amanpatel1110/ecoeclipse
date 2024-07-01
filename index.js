@@ -244,6 +244,20 @@ app.get('/community/posts', async (req, res) => {
     }
 })
 
+app.post('/contactus', [
+
+    body('email').exists().trim().isEmail().withMessage('Email must be valid').escape(),
+    body('uname').exists().trim().escape(),
+    body('message').exists().trim().escape(),
+
+], async (req, res) => {
+    const { uname, email, message } = req.body;
+
+    await mailSender(uname, email, message)
+        .then(() => res.json({ msg: 'success' }))
+        .catch(() => res.json({ msg: 'fail' }))
+    return res;
+})
 
 app.use(authMiddleWare);
 
@@ -380,21 +394,6 @@ app.post('/goal/delete', async (req, res) => {
         return res.json({ msg: 'fails' });
     }
 });
-
-app.post('/contactus', [
-
-    body('email').exists().trim().isEmail().withMessage('Email must be valid').escape(),
-    body('uname').exists().trim().escape(),
-    body('message').exists().trim().escape(),
-
-], async (req, res) => {
-    const { uname, email, message } = req.body;
-
-    await mailSender(uname, email, message)
-        .then(() => res.json({ msg: 'success' }))
-        .catch(() => res.json({ msg: 'fail' }))
-    return res;
-})
 
 app.post('/community/addEvent', async (req, res) => {
     const { title, date, day, description } = req.body;
